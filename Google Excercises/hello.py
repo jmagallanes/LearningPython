@@ -26,7 +26,12 @@ def main():
     name = sys.argv[1]
   else:
     name = 'World'
-  print ('Hello', name, ". Welcome")
+  if name == 'Jose':
+    name = 'Jose, Welcome Back!'
+  else:
+    name = 'Stranger'
+
+  print 'Hello', name
 
 # This is the standard boilerplate that calls the main() function.
 if __name__ == '__main__':
