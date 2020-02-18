@@ -39,6 +39,35 @@ print_words() and print_top().
 
 import sys
 
+
+def wordDictionaryGenerator(filename):
+  wordDictionary = {}
+  f = open(filename, 'r')
+  for line in f:
+    wordList = line.split()
+    for word in wordList:
+      if word in wordDictionary:
+        wordDictionary[word.lower()] = wordDictionary[word.lower()] + 1
+      else:
+        wordDictionary[word.lower()] = 1
+  return wordDictionary
+
+
+def print_words(filename):
+    wordDictionary = wordDictionaryGenerator(filename)
+    printList = sorted(wordDictionary.items())
+    for word in printList:
+      print word[0], word[1]
+
+def getCount(tuple):
+  return tuple[1]
+
+def print_top(filename):
+  wordDictionary = wordDictionaryGenerator(filename)
+  printList = sorted(wordDictionary.items(), key=getCount, reverse=True)
+  for word in printList[:20]:
+    print word[0], word[1]
+
 # +++your code here+++
 # Define print_words(filename) and print_top(filename) functions.
 # You could write a helper utility function that reads a file
@@ -50,19 +79,20 @@ import sys
 # This basic command line argument parsing code is provided and
 # calls the print_words() and print_top() functions which you must define.
 def main():
-  if len(sys.argv) != 3:
-    print 'usage: ./wordcount.py {--count | --topcount} file'
-    sys.exit(1)
+    if len(sys.argv) != 3:
+        print 'usage: ./wordcount.py {--count | --topcount} file'
+        sys.exit(1)
 
-  option = sys.argv[1]
-  filename = sys.argv[2]
-  if option == '--count':
-    print_words(filename)
-  elif option == '--topcount':
-    print_top(filename)
-  else:
-    print 'unknown option: ' + option
-    sys.exit(1)
+    option = sys.argv[1]
+    filename = sys.argv[2]
+    if option == '--count':
+        print_words(filename)
+    elif option == '--topcount':
+        print_top(filename)
+    else:
+        print 'unknown option: ' + option
+        sys.exit(1)
+
 
 if __name__ == '__main__':
-  main()
+    main()
